@@ -188,3 +188,65 @@ class Neuron {
 
 
 
+
+
+class SearchBar {
+    constructor() {
+      this.query = "";
+  
+      this.type = this.type.bind(this);
+      this.search = this.search.bind(this);
+    }
+  
+    type(letter) {
+      this.query += letter;
+      this.search();
+    }
+  
+    search() {
+      console.log(`searching for ${this.query}`);
+    }
+  }
+
+
+Function.prototype.myDebounce = function(interval) {
+    let itsTime = true;
+    let that = this;
+
+    return function(){
+        // console.log(that());
+		if(itsTime){
+        // console.log(that());
+			itsTime = false;
+			setTimeout(function()  {
+                that();
+                itsTime = true;
+            } ,interval);
+            console.log(that());
+		} else {
+			return "TOO SOON";
+		}
+	};
+};
+
+
+const searchBar = new SearchBar();
+
+const queryForHelloWorld = () => {
+  searchBar.type("h");
+  searchBar.type("e");
+  searchBar.type("l");
+  searchBar.type("l");
+  searchBar.type("o");
+  searchBar.type(" ");
+  searchBar.type("w");
+  searchBar.type("o");
+  searchBar.type("r");
+  searchBar.type("l");
+  searchBar.type("d");
+};
+
+queryForHelloWorld();
+
+searchBar.search = searchBar.search.myDebounce(5000);
+searchBar.search();
