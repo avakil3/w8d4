@@ -76,10 +76,56 @@ class Lamp {
   
   const lamp = new Lamp();
   
-  turnOn(); // should not work the way we want it to
+//   turnOn(); // should not work the way we want it to
   
   const boundTurnOn = turnOn.bind(lamp);
   const myBoundTurnOn = turnOn.myBind(lamp);
   
-  boundTurnOn(); // should say "Turning on a lamp"
-  myBoundTurnOn(); // should say "Turning on a lamp"
+//   boundTurnOn(); // should say "Turning on a lamp"
+//   myBoundTurnOn(); // should say "Turning on a lamp"
+
+
+  
+  
+  const readline = require('readline');
+  const reader = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+  });
+
+  function askIfGreaterThan(el1, el2, callback) {
+    reader.question (`Is ${el1} greater than ${el2}?`, function(answer) {
+        const response = answer;
+        if (response === "yes") {
+            callback(true);
+        } else {
+            callback(false);
+        };
+    })
+  }
+
+  function innerBubbleSortLoop(arr, i, madeAnySwaps, outerBubbleSortLoop) {
+      madeAnySwaps = false;
+      if (i < arr.length - 1) {
+          console.log(i);
+          askIfGreaterThan(arr[i], arr[i + 1], (isGreaterThan) => {
+              console.log(arr);
+              if (isGreaterThan) {
+                [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+                madeAnySwaps = true;
+                console.log(arr);
+              } 
+        innerBubbleSortLoop(arr, i + 1, madeAnySwaps, outerBubbleSortLoop);
+          })
+      }
+      if (i === (arr.length - 1)) {
+          outerBubbleSortLoop(madeAnySwaps);
+      }
+  }
+
+
+  console.log(innerBubbleSortLoop([6,5,4,3,2,1], 0, false, function (){} ))
+
+
+function absurdBubbleSort(arr, sortCompletionCallback) {
+}
