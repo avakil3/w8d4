@@ -1,6 +1,3 @@
-date = new Date();
-// setInterval(function(){console.log(date.getSeconds())},1000);
-
 
 
 class Clock {
@@ -87,11 +84,11 @@ class Lamp {
 
   
   
-  const readline = require('readline');
-  const reader = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-  });
+//   const readline = require('readline');
+//   const reader = readline.createInterface({
+//       input: process.stdin,
+//       output: process.stdout
+//   });
 
   function askIfGreaterThan(el1, el2, callback) {
     reader.question (`Is ${el1} greater than ${el2}?`, function(answer) {
@@ -124,8 +121,70 @@ class Lamp {
   }
 
 
-  console.log(innerBubbleSortLoop([6,5,4,3,2,1], 0, false, function (){} ))
-
-
 function absurdBubbleSort(arr, sortCompletionCallback) {
+	
+	function outerBubbleSortLoop(madeAnySwaps){
+		if(madeAnySwaps){
+			innerBubbleSortLoop(arr,0,false,outerBubbleSortLoop);
+		}else{
+			sortCompletionCallback(arr);
+		}
+	}
+
+	outerBubbleSortLoop(true);
 }
+
+// absurdBubbleSort([3, 2, 1], function(arr) {
+// 	console.log("Sorted array: " + JSON.stringify(arr));
+// 	reader.close();
+//   });
+
+
+Function.prototype.myThrottle = function(interval){
+	let tooSoon = false;
+	let that = this;
+	
+	
+
+	return function(){
+		if(!tooSoon){
+			tooSoon = true;
+			setTimeout(function(){
+				tooSoon = false;
+			},interval);
+			that();
+		}else{
+			return "TOO SOON";
+		}
+	};
+
+};
+
+class Neuron {
+	fire() {
+	  console.log("Firing!");
+	}
+  }
+  
+  const neuron = new Neuron();
+  // When we create a new Neuron,
+  // we can call #fire as frequently as we want
+  
+  // The following code will try to #fire the neuron every 10ms. Try it in the console:
+  const interval = setInterval(() => {
+	neuron.fire();
+  }, 10);
+  
+  // You can use clearInterval to stop the firing:
+  clearInterval(interval);
+  
+  // Using Function#myThrottle, we should be able to throttle
+  // the #fire function of our neuron so that it can only fire
+  // once every 500ms:
+  
+  neuron.fire = neuron.fire.myThrottle(1000);
+
+//   neuron.fire();
+
+
+
